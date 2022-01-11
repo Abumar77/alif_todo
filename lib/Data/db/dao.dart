@@ -37,13 +37,18 @@ class TaskDbAccessProvider {
     return tasks;
   }
 
-  Future<int> updateTask(Task task) async {
+  Future<int> updateTask(Task task, {int? id}) async {
     final db = await dbProvider.database;
 
-    var result = await db!.update(taskTable, task.toDatabaseJson(),
-        where: "id = ?", whereArgs: [task.id]);
-
-    return result;
+    if (id == null) {
+      var result = await db!.update(taskTable, task.toDatabaseJson(),
+          where: "id = ?", whereArgs: [task.id]);
+      return result;
+    } else {
+      var result = await db!.update(taskTable, task.toDatabaseWithoutIdJson(),
+          where: "id = ?", whereArgs: [id]);
+      return result;
+    }
   }
 
   Future<int> deleteTask(int id) async {

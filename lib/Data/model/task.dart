@@ -8,7 +8,7 @@ class Task {
     this.id,
     required this.name,
     required this.deadline,
-    required this.isDone,
+    this.isDone = false,
   });
 
   factory Task.fromDatabaseJson(Map<String, dynamic> data) => Task(
@@ -20,6 +20,12 @@ class Task {
 
   Map<String, dynamic> toDatabaseJson() => {
         "id": id,
+        "name": name,
+        "deadline": deadline,
+        "is_done": isDone == false ? 0 : 1,
+      };
+
+  Map<String, dynamic> toDatabaseWithoutIdJson() => {
         "name": name,
         "deadline": deadline,
         "is_done": isDone == false ? 0 : 1,

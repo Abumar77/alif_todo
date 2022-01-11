@@ -4,18 +4,23 @@ import 'package:flutter/material.dart';
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:intl/intl.dart';
 
-class FormPage extends StatelessWidget {
+class FormPage extends StatefulWidget {
+  @override
+  State<FormPage> createState() => _FormPageState();
+}
+
+class _FormPageState extends State<FormPage> {
   final TaskBloc taskBloc = TaskBloc();
 
   final GlobalKey<FormState> _formKey = GlobalKey();
+
   final _nameController = TextEditingController();
 
   final format = DateFormat("yyyy-MM-dd");
+
   final _dateController = TextEditingController();
 
   bool isDone = false;
-
-  void _submit() {}
 
   @override
   Widget build(BuildContext context) {
@@ -73,7 +78,9 @@ class FormPage extends StatelessWidget {
                             value: false,
                             groupValue: isDone,
                             onChanged: (bool? value) {
-                              isDone = value!;
+                              setState(() {
+                                isDone = value!;
+                              });
                             },
                           ),
                           const Text('В процессе'),
@@ -85,7 +92,9 @@ class FormPage extends StatelessWidget {
                             value: true,
                             groupValue: isDone,
                             onChanged: (bool? value) {
-                              isDone = value!;
+                              setState(() {
+                                isDone = value!;
+                              });
                             },
                           ),
                           const Text('Выполнено'),

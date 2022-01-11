@@ -28,8 +28,12 @@ class TaskBloc {
     getTasks();
   }
 
-  updateTask(Task task) async {
-    await _taskRepository.updateTask(task);
+  updateTask(Task task, {int? id}) async {
+    if (id == null) {
+      await _taskRepository.updateTask(task);
+    } else {
+      await _taskRepository.updateTask(task, id: id);
+    }
     getTasks();
   }
 
