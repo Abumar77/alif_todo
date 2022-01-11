@@ -13,20 +13,6 @@ class _MyHomePageState extends State<MyHomePage> {
   final DismissDirection _dismissDirection = DismissDirection.horizontal;
   TaskBloc taskBloc = TaskBloc();
 
-  // final List<Widget> _pages = <Widget>[
-  //   Container(
-  //     child: getAllTasksWidget(),
-  //   ),
-  //   Icon(
-  //     Icons.camera,
-  //     size: 150,
-  //   ),
-  //   Icon(
-  //     Icons.chat,
-  //     size: 150,
-  //   ),
-  // ];
-
   int _selectedIndex = 0;
   @override
   Widget build(BuildContext context) {
@@ -56,7 +42,7 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       bottomNavigationBar: BottomNavigationBar(
         selectedFontSize: 20,
-        selectedIconTheme: IconThemeData(color: Colors.green, size: 40),
+        selectedIconTheme: const IconThemeData(color: Colors.green, size: 40),
         selectedItemColor: Colors.green,
         selectedLabelStyle: const TextStyle(fontWeight: FontWeight.bold),
         iconSize: 30,
@@ -98,9 +84,35 @@ class _MyHomePageState extends State<MyHomePage> {
         });
   }
 
+  Widget _ticker(Task task) {
+    return InkWell(
+      onTap: () {
+        task.isDone = !task.isDone;
+
+        taskBloc.updateTask(task);
+      },
+      child: Container(
+        child: Padding(
+          padding: const EdgeInsets.all(15.0),
+          child: task.isDone
+              ? const Icon(
+                  Icons.done,
+                  size: 26.0,
+                  color: Colors.green,
+                )
+              : const Icon(
+                  Icons.check_box_outline_blank,
+                  size: 26.0,
+                  color: Colors.black,
+                ),
+        ),
+      ),
+    );
+  }
+
   Widget getTaskCardWidget(AsyncSnapshot<List<Task>> snapshot) {
     if (snapshot.hasData) {
-      return snapshot.data!.length != 0
+      return snapshot.data!.isNotEmpty
           ? ListView.builder(
               itemCount: snapshot.data!.length,
               itemBuilder: (context, itemPosition) {
@@ -120,11 +132,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     color: Colors.redAccent,
                   ),
                   onDismissed: (direction) {
-                    /*The magic
-                    delete Todo item by ID whenever
-                    the card is dismissed
-              //       */
-                    // taskBloc.deleteTodoById(task.id);
+                    taskBloc.deleteTaskById(task.id);
                   },
                   direction: _dismissDirection,
                   key: ObjectKey(task),
@@ -135,30 +143,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       ),
                       color: Colors.white,
                       child: ListTile(
-                        leading: InkWell(
-                          onTap: () {
-                            // //Reverse the value
-                            // task.isDone = !task.isDone;
-                            //
-                            // taskBloc.updateTodo(task);
-                          },
-                          child: Container(
-                            child: Padding(
-                              padding: const EdgeInsets.all(15.0),
-                              child: task.isDone
-                                  ? const Icon(
-                                      Icons.done,
-                                      size: 26.0,
-                                      color: Colors.green,
-                                    )
-                                  : const Icon(
-                                      Icons.check_box_outline_blank,
-                                      size: 26.0,
-                                      color: Colors.black,
-                                    ),
-                            ),
-                          ),
-                        ),
+                        leading: _ticker(task),
                         title: Text(
                           task.name,
                           style: TextStyle(
@@ -170,7 +155,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                   : TextDecoration.none),
                         ),
                         trailing: Text(
-                          'Дедлайн до${task.deadline}',
+                          'Дедлайн до ${task.deadline}',
                           style: TextStyle(
                               color: Colors.red,
                               fontSize: 12.5,
@@ -216,11 +201,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     color: Colors.redAccent,
                   ),
                   onDismissed: (direction) {
-                    /*The magic
-                    delete Todo item by ID whenever
-                    the card is dismissed
-              //       */
-                    // taskBloc.deleteTodoById(task.id);
+                    taskBloc.deleteTaskById(task.id);
                   },
                   direction: _dismissDirection,
                   key: ObjectKey(task),
@@ -231,30 +212,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       ),
                       color: Colors.white,
                       child: ListTile(
-                        leading: InkWell(
-                          onTap: () {
-                            // //Reverse the value
-                            // task.isDone = !task.isDone;
-                            //
-                            // taskBloc.updateTodo(task);
-                          },
-                          child: Container(
-                            child: Padding(
-                              padding: const EdgeInsets.all(15.0),
-                              child: task.isDone
-                                  ? const Icon(
-                                      Icons.done,
-                                      size: 26.0,
-                                      color: Colors.green,
-                                    )
-                                  : const Icon(
-                                      Icons.check_box_outline_blank,
-                                      size: 26.0,
-                                      color: Colors.black,
-                                    ),
-                            ),
-                          ),
-                        ),
+                        leading: _ticker(task),
                         title: Text(
                           task.name,
                           style: TextStyle(
@@ -266,7 +224,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                   : TextDecoration.none),
                         ),
                         trailing: Text(
-                          'Дедлайн до${task.deadline}',
+                          'Дедлайн до ${task.deadline}',
                           style: TextStyle(
                               color: Colors.red,
                               fontSize: 12.5,
@@ -317,11 +275,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     color: Colors.redAccent,
                   ),
                   onDismissed: (direction) {
-                    /*The magic
-                    delete Todo item by ID whenever
-                    the card is dismissed
-              //       */
-                    // taskBloc.deleteTodoById(task.id);
+                    taskBloc.deleteTaskById(task.id);
                   },
                   direction: _dismissDirection,
                   key: ObjectKey(task),
@@ -332,30 +286,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       ),
                       color: Colors.white,
                       child: ListTile(
-                        leading: InkWell(
-                          onTap: () {
-                            // //Reverse the value
-                            // task.isDone = !task.isDone;
-                            //
-                            // taskBloc.updateTodo(task);
-                          },
-                          child: Container(
-                            child: Padding(
-                              padding: const EdgeInsets.all(15.0),
-                              child: task.isDone
-                                  ? const Icon(
-                                      Icons.done,
-                                      size: 26.0,
-                                      color: Colors.green,
-                                    )
-                                  : const Icon(
-                                      Icons.check_box_outline_blank,
-                                      size: 26.0,
-                                      color: Colors.black,
-                                    ),
-                            ),
-                          ),
-                        ),
+                        leading: _ticker(task),
                         title: Text(
                           task.name,
                           style: TextStyle(
@@ -367,7 +298,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                   : TextDecoration.none),
                         ),
                         trailing: Text(
-                          'Дедлайн до${task.deadline}',
+                          'Дедлайн до ${task.deadline}',
                           style: TextStyle(
                               color: Colors.red,
                               fontSize: 12.5,

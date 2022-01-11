@@ -27,4 +27,18 @@ class TaskBloc {
     await _taskRepository.insertTasks(task);
     getTasks();
   }
+
+  updateTask(Task task) async {
+    await _taskRepository.updateTask(task);
+    getTasks();
+  }
+
+  deleteTaskById(int? id) async {
+    await _taskRepository.deleteTaskById(id!);
+    getTasks();
+  }
+
+  dispose() {
+    _taskController.close();
+  }
 }
