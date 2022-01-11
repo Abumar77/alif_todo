@@ -2,6 +2,8 @@ import 'package:alif_todo/Bloc/bloc.dart';
 import 'package:alif_todo/Data/model/task.dart';
 import 'package:flutter/material.dart';
 
+import 'components.dart';
+
 class MyHomePage extends StatefulWidget {
   const MyHomePage({Key? key}) : super(key: key);
 
@@ -390,13 +392,6 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
         ],
       ),
-    );
-  }
-
-  Widget noTaskMessageWidget() {
-    return const Text(
-      "Нет заданий пока",
-      style: TextStyle(fontSize: 19, fontWeight: FontWeight.w500),
     );
   }
 }
