@@ -5,6 +5,8 @@ import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:intl/intl.dart';
 
 class FormPage extends StatefulWidget {
+  const FormPage({Key? key}) : super(key: key);
+
   @override
   State<FormPage> createState() => _FormPageState();
 }

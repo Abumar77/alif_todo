@@ -2,9 +2,9 @@ import 'package:alif_todo/Bloc/bloc.dart';
 import 'package:alif_todo/Data/model/task.dart';
 import 'package:flutter/material.dart';
 
-import 'form_page.dart';
-
 class MyHomePage extends StatefulWidget {
+  const MyHomePage({Key? key}) : super(key: key);
+
   @override
   _MyHomePageState createState() => _MyHomePageState();
 }
@@ -92,21 +92,19 @@ class _MyHomePageState extends State<MyHomePage> {
 
         taskBloc.updateTask(task);
       },
-      child: Container(
-        child: Padding(
-          padding: const EdgeInsets.all(15.0),
-          child: task.isDone
-              ? const Icon(
-                  Icons.done,
-                  size: 26.0,
-                  color: Colors.green,
-                )
-              : const Icon(
-                  Icons.check_box_outline_blank,
-                  size: 26.0,
-                  color: Colors.black,
-                ),
-        ),
+      child: Padding(
+        padding: const EdgeInsets.all(15.0),
+        child: task.isDone
+            ? const Icon(
+                Icons.done,
+                size: 26.0,
+                color: Colors.green,
+              )
+            : const Icon(
+                Icons.check_box_outline_blank,
+                size: 26.0,
+                color: Colors.black,
+              ),
       ),
     );
   }
@@ -119,28 +117,6 @@ class _MyHomePageState extends State<MyHomePage> {
               itemBuilder: (context, itemPosition) {
                 Task task = snapshot.data![itemPosition];
                 final Widget dismissibleCard = Dismissible(
-                  // confirmDismiss: (DismissDirection direction) async {
-                  //   return await showDialog(
-                  //     context: context,
-                  //     builder: (BuildContext context) {
-                  //       return AlertDialog(
-                  //         title: const Text("Delete Confirmation"),
-                  //         content: const Text(
-                  //             "Are you sure you want to delete this item?"),
-                  //         actions: <Widget>[
-                  //           TextButton(
-                  //               onPressed: () =>
-                  //                   Navigator.of(context).pop(true),
-                  //               child: const Text("Delete")),
-                  //           TextButton(
-                  //             onPressed: () => Navigator.of(context).pop(false),
-                  //             child: const Text("Cancel"),
-                  //           ),
-                  //         ],
-                  //       );
-                  //     },
-                  //   );
-                  // },
                   background: Container(
                     child: const Padding(
                       padding: EdgeInsets.only(left: 10),
@@ -179,7 +155,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   key: ObjectKey(task),
                   child: Card(
                       shape: RoundedRectangleBorder(
-                        side: BorderSide(color: Colors.grey, width: 0.5),
+                        side: const BorderSide(color: Colors.grey, width: 0.5),
                         borderRadius: BorderRadius.circular(5),
                       ),
                       color: Colors.white,
@@ -253,7 +229,7 @@ class _MyHomePageState extends State<MyHomePage> {
                               controller: _taskEditController,
                               textInputAction: TextInputAction.newline,
                               maxLines: 4,
-                              style: TextStyle(
+                              style: const TextStyle(
                                   fontSize: 21, fontWeight: FontWeight.w400),
                               autofocus: true,
                               decoration: InputDecoration(
@@ -307,7 +283,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Widget getProcessingTasksCardWidget(AsyncSnapshot<List<Task>> snapshot) {
     if (snapshot.hasData) {
-      return snapshot.data!.length != 0
+      return snapshot.data!.isNotEmpty
           ? ListView.builder(
               itemCount: snapshot.data!.length,
               itemBuilder: (context, itemPosition) {
@@ -355,7 +331,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   key: ObjectKey(task),
                   child: Card(
                       shape: RoundedRectangleBorder(
-                        side: BorderSide(color: Colors.grey, width: 0.5),
+                        side: const BorderSide(color: Colors.grey, width: 0.5),
                         borderRadius: BorderRadius.circular(5),
                       ),
                       color: Colors.white,
@@ -388,7 +364,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 if (task.isDone == isDoneTask) {
                   return dismissibleCard;
                 } else {
-                  return SizedBox();
+                  return const SizedBox();
                 }
               })
           : Center(
@@ -402,30 +378,25 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   Widget loadingData() {
-    //pull todos again
     taskBloc.getTasks();
-    return Container(
-      child: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: const <Widget>[
-            CircularProgressIndicator(),
-            Text(
-              "Загружается...",
-              style: TextStyle(fontSize: 19, fontWeight: FontWeight.w500),
-            ),
-          ],
-        ),
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: const <Widget>[
+          CircularProgressIndicator(),
+          Text(
+            "Загружается...",
+            style: TextStyle(fontSize: 19, fontWeight: FontWeight.w500),
+          ),
+        ],
       ),
     );
   }
 
   Widget noTaskMessageWidget() {
-    return Container(
-      child: const Text(
-        "Нет заданий пока",
-        style: TextStyle(fontSize: 19, fontWeight: FontWeight.w500),
-      ),
+    return const Text(
+      "Нет заданий пока",
+      style: TextStyle(fontSize: 19, fontWeight: FontWeight.w500),
     );
   }
 }

@@ -4,7 +4,7 @@ import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
 
-final taskTable = 'Task';
+const taskTable = 'Task';
 
 class DatabaseProvider {
   static final DatabaseProvider dbProvider = DatabaseProvider();
